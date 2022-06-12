@@ -1,0 +1,20 @@
+const express=require('express')
+const router=express.Router()
+const path=require('path')
+// barcha so'rovlar githubda yozilgan !!!
+const teacherRouter=require('./teachers/teacher.router')
+const adminRouter=require('./admin/admin.router')
+const auth=require('./jwt/auth')
+// const jwtVerify=require('./jwt/jwtVerify')
+const chiefRouter=require('./chief/chief.router')
+const expenseRouter=require('./expense/expense.router')
+
+router.use('/login',auth)
+// router.use(jwtVerify)
+router.use('/teachers',teacherRouter)
+router.use('/addAdmin',adminRouter)
+router.use('/chief',chiefRouter)
+router.use('/uploads',express.static((__dirname,"uploads")))
+router.use('/expense',expenseRouter)
+
+module.exports=router
