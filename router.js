@@ -7,14 +7,15 @@ const adminRouter=require('./admin/admin.router')
 const auth=require('./jwt/auth')
 // const jwtVerify=require('./jwt/jwtVerify')
 const chiefRouter=require('./chief/chief.router')
-const expenseRouter=require('./expense/expense.router')
-
+const exampleRouter=require('./example/example.router')
+const paperworkRouter=require('./paperwork/paperwork.router')
 router.use('/login',auth)
 // router.use(jwtVerify)
 router.use('/teachers',teacherRouter)
 router.use('/addAdmin',adminRouter)
 router.use('/chief',chiefRouter)
+router.use('/paperwork',paperworkRouter)
 router.use('/uploads',express.static((__dirname,"uploads")))
-router.use('/expense',expenseRouter)
+router.use('/example',exampleRouter)
 
 module.exports=router
