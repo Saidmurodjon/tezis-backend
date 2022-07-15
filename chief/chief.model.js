@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const chifSchema = mongoose.Schema({
-  name: String,
-  lastName: String,
+  fullName: String,
+  kafedraName: String,
   tel: String,
   faculty: String,
+  facultyId: String,
   login: String,
   password: String,
   date: Date,
@@ -15,6 +16,10 @@ const chifSchema = mongoose.Schema({
   role: {
     type: String,
     default: "chief",
+  },
+  tasdiq: {
+    type: Boolean,
+    default: false,
   },
 });
 const ChiefModel = mongoose.model("ChiefModel", chifSchema);

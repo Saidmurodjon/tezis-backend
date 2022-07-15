@@ -1,41 +1,32 @@
-const ChiefModel = require("./chief.model");
+const DeanModel = require("./dean.model");
 // const fs = require('fs');
 // const path = require('path');
 // const upload = require('../teachers/upload');
-async function getChief(req, res) {
+async function getDean(req, res) {
   try {
-    const Chief = await ChiefModel.find({});
+    const Chief = await DeanModel.find({});
     return res.status(200).send(Chief);
   } catch (err) {
     res.status(400).send(err);
   }
 }
 
-async function addChief(req, res) {
+async function addDean(req, res) {
   try {
     // let image =req.file.originalname
 
-    const Chief = await ChiefModel.create(req.body);
-    return res.status(200).send(Chief);
+    const category = await DeanModel.create(req.body);
+
+    return res.status(201).send(category);
   } catch (err) {
     res.status(400).send(err);
   }
 }
 
-async function updateChief(req, res) {
+async function updateDean(req, res) {
   try {
     let userId = req.params.id;
-    // let del= await ChiefModel.findOne({userId})
 
-    // console.log(del.imagePath);
-
-    // fs.unlink( `/home/kali/theBest/EducationMERN/backend/uploads/${del.imagePath}`, function (err) {
-    //     if (err) {
-    //         console.error(err);
-    //     }
-    //    console.log('File has been Deleted');
-    // });
-    // let image =req.file.originalname
     let category = {
       name: req.body.name,
       lastName: req.body.lastName,
@@ -45,7 +36,7 @@ async function updateChief(req, res) {
       login: req.body.login,
       password: req.body.password,
     };
-    let result = await ChiefModel.findByIdAndUpdate(userId, category);
+    let result = await DeanModel.findByIdAndUpdate(userId, category);
 
     return res.status(200).send(result);
   } catch (err) {
@@ -53,7 +44,7 @@ async function updateChief(req, res) {
   }
 }
 
-async function deleteChief(req, res) {
+async function deleteDean(req, res) {
   try {
     let userId = req.params.id;
     // let del= await ChiefModel.findOne({userId})
@@ -67,7 +58,7 @@ async function deleteChief(req, res) {
     //    console.log('File has been Deleted');
     // });
 
-    let result = await ChiefModel.findByIdAndDelete(userId);
+    let result = await DeanModel.findByIdAndDelete(userId);
     // console.log(del.imagePath);
     // fs.unlinkSync();
 
@@ -78,8 +69,8 @@ async function deleteChief(req, res) {
 }
 
 module.exports = {
-  getChief,
-  addChief,
-  updateChief,
-  deleteChief,
+  getDean,
+  addDean,
+  updateDean,
+  deleteDean,
 };

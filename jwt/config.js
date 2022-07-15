@@ -1,4 +1,4 @@
 module.exports={
-   secretKey:"edu", 
-   expiresAt:3600
+   secretKey:"tezis", 
+   expiresAt:7200
 }

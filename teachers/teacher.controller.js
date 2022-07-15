@@ -12,31 +12,8 @@ async function getTeacher(req, res) {
 
 async function addTeacher(req, res) {
   try {
-    // let image =req.file.originalname
-    // console.log(image)
-    const category = new TeacherModel({
-      name: req.body.name,
-      lastName: req.body.lastName,
-      tel: req.body.tel,
-      email: req.body.email,
-      kafedra: req.body.kafedra,
-      login: req.body.login,
-      password: req.body.password,
-      date: new Date(),
-      // imagePath: image
-    });
-    category.save((err, category) => {
-      if (err) {
-        // console.log(err)
-        return res.status(400).json({
-          errors: err.meesage,
-        });
-      }
-      return res.json({
-        message: "Created Teacher's information successfully",
-        category,
-      });
-    });
+    const teacher = await TeacherModel.create(req.body);
+    return res.status(201).send(teacher);
   } catch (err) {
     res.status(400).send(err);
   }

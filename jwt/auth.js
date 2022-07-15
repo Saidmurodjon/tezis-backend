@@ -1,62 +1,43 @@
-const express=require('express')
-const router=express.Router()
-const jwt=require('jsonwebtoken')
-const AdminModel = require('../admin/admin.model')
-const TeacherModel = require('../teachers/teacher.model')
-const config=require('./config')
-router.route('/').post(async (req,res)=>{
-    try{
-        let teacher =await TeacherModel.findOne({
-            login:req.body.login,
-            password:req.body.password
-        })
-        let admin = await AdminModel.findOne({
-            login:req.body.login,
-            password:req.body.password,
-            role:"admin"
-            
-        })
-        if(teacher){
-                const  jwtToken= jwt.sign(
-                    {message:"tokencreated"},
-                    config.secretKey,
-                    {expiresIn:config.expiresAt}
-                    
-                    )
-                    return res.status(200).json({
-                        jwt_token:jwtToken,
-                        type:"user"
-                    })
-                }else if(admin){
-                    const  jwtToken= jwt.sign(
-                        {message:"tokencreated"},
-                        config.secretKey,
-                        {expiresIn:config.expiresAt}
-
-                )
-                return res.status(200).json({
-                    jwt_token:jwtToken,
-                    type:"admin"
-                })
-        }else if(req.body.login="boss" && req.body.password=="boss"){
-                const  jwtToken= jwt.sign(
-                    {message:"tokencreated"},
-                    config.secretKey,
-                    {expiresIn:config.expiresAt}
-
-                )
-                return res.status(200).json({
-                    jwt_token:jwtToken,
-                    type:"boss"
-                })
-                }else{
-                    return res.status(402).json({
-                        jwt_token:"hato login"
-                    })
-                }
-
-    }catch(err){
-        return res.status(402).send(err)
+const express = require("express");
+const router = express.Router();
+const jwt = require("jsonwebtoken");
+const TeacherModel = require("../teachers/teacher.model");
+const ChiefModel = require("../chief/chief.model");
+const config = require("./config");
+router.route("/").post(async (req, res) => {
+  try {
+    const teacher = await TeacherModel.findOne({
+      login: req.body.login,
+      password: req.body.password,
+    });
+    const chief = await ChiefModel.findOne({
+      login: req.body.login,
+      password: req.body.password,
+    });
+    if (teacher) {
+      const jwtToken = jwt.sign({ message: "tokencreated" }, config.secretKey, {
+        expiresIn: config.expiresAt,
+      });
+      return res.status(200).json({
+        jwt_token: jwtToken,
+        user: teacher,
+      });
+    } else if (chief) {
+      const jwtToken = jwt.sign({ message: "tokencreated" }, config.secretKey, {
+        expiresIn: config.expiresAt,
+      });
+      return res.status(200).json({
+        jwt_token: jwtToken,
+        user: chief,
+      });
+    } else {
+      return res.status(401).json({
+        jwt_token: "hato login",
+      });
     }
-})
-module.exports=router
+  } catch (err) {
+    console.log(err);
+    return res.status(401).send(err);
+  }
+});
+module.exports = router;
